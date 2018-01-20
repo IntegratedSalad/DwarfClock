@@ -6,7 +6,8 @@
 #   #  #   #  ## #   #  #   #
 #####  #####     #####  #####
 
-1 Make the surface with "unlit" space, filled with gray smiles from 8x8 437 code
+1 Make the surface with "unlit" space, filled with gray smiles from 8x8 437 code !DONE!
+2.
 
 
 # Below the clock will be a dwarf, which tell you what the current date is.
@@ -16,5 +17,13 @@
 # BONUS:
 # If a player presses a combination of " alt + p + 1", it switches to the "pong" mode.
 
-
 SUPER BONUS: ZROBIĆ SPACE INVADERS GDZIE STRZELAMY DWARFEM DO ELFÓW
+
+
+upper left corners of the digits (on the grid (box with grey un active dwarf faces)):
+(y, x)
+
+1: 1, 4
+2: 1, 9
+3: 1, 16
+4: 1, 21
