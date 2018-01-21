@@ -57,3 +57,15 @@ NINE = [[1, 1, 1, 1],
         [1, 1, 1, 1],
         [0, 0, 0, 1],
         [1, 1, 1, 1]]
+
+display_digits = [ZERO,
+                  ONE,
+                  TWO,
+                  THREE,
+                  FOUR,
+                  FIVE,
+                  SIX,
+                  SEVEN,
+                  EIGHT,
+                  NINE
+                  ]
