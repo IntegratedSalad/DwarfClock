@@ -19,10 +19,10 @@ SCREEN_HEIGHT_SIZE = SCREEN_HEIGHT * FONT_SIZE
 
 # u'px437ibmbios'
 
+ddigits = []
 
 def init():
-    global font, scr, hash_SYMBOL, dwarf_SYMBOL_ACTIVE, dwarf_SYMBOL_UNACTIVE, grid, digit1, digit2, digit3, digit4, \
-    clock, dwarf_MONTH_COLOR
+    global font, scr, hash_SYMBOL, dwarf_SYMBOL_ACTIVE, dwarf_SYMBOL_UNACTIVE, grid, clock, dwarf_MONTH_COLOR, ddigits
 
     pygame.init()
     pygame.font.init()
@@ -34,10 +34,7 @@ def init():
     dwarf_SYMBOL_UNACTIVE = font.render(u"☻", True, GREY)
     pygame.display.set_caption('Dwarf Clock')
 
-    digit1 = make_digit()
-    digit2 = make_digit()
-    digit3 = make_digit()
-    digit4 = make_digit()
+    ddigits = [make_digit(), make_digit(), make_digit(), make_digit()]
 
     grid = [[0 for x in range(SCREEN_WIDTH - 2)] for y in range(SCREEN_HEIGHT - 4)]
     clock = pygame.time.Clock()
@@ -118,72 +115,20 @@ def get_date():
 def place_digits():
     # maps digits to the board of unlit faces
 
-    set_digit1()
-    set_digit2()
-    set_digit3()
-    set_digit4()
-
-    map_digit(1, 4, digit1)
-    map_digit(1, 9, digit2)
-    map_digit(1, 16, digit3)
-    map_digit(1, 21, digit4)
-
-
-def set_digit1():
-    global digit1
     full_date = get_date()
-    if int(full_date[0][0]) == 0: digit1 = digits.ZERO
-    if int(full_date[0][0]) == 1: digit1 = digits.ONE
-    if int(full_date[0][0]) == 2: digit1 = digits.TWO
-    if int(full_date[0][0]) == 3: digit1 = digits.THREE
-    if int(full_date[0][0]) == 4: digit1 = digits.FOUR
-    if int(full_date[0][0]) == 5: digit1 = digits.FIVE
-    if int(full_date[0][0]) == 6: digit1 = digits.SIX
-    if int(full_date[0][0]) == 7: digit1 = digits.SEVEN
-    if int(full_date[0][0]) == 8: digit1 = digits.EIGHT
-    if int(full_date[0][0]) == 9: digit1 = digits.NINE
+    digit_dates = [
+        [ddigits[0], int(full_date[0][0]), 1, 4],
+        [ddigits[1], int(full_date[0][1]), 1, 9],
+        [ddigits[2], int(full_date[1][0]), 1, 16],
+        [ddigits[3], int(full_date[1][1]), 1, 21]
+        ]
 
-def set_digit2():
-    global digit2
-    full_date = get_date()
-    if int(full_date[0][1]) == 0: digit2 = digits.ZERO
-    if int(full_date[0][1]) == 1: digit2 = digits.ONE
-    if int(full_date[0][1]) == 2: digit2 = digits.TWO
-    if int(full_date[0][1]) == 3: digit2 = digits.THREE
-    if int(full_date[0][1]) == 4: digit2 = digits.FOUR
-    if int(full_date[0][1]) == 5: digit2 = digits.FIVE
-    if int(full_date[0][1]) == 6: digit2 = digits.SIX
-    if int(full_date[0][1]) == 7: digit2 = digits.SEVEN
-    if int(full_date[0][1]) == 8: digit2 = digits.EIGHT
-    if int(full_date[0][1]) == 9: digit2 = digits.NINE
-
-def set_digit3():
-    global digit3
-    full_date = get_date()
-    if int(full_date[1][0]) == 0: digit3 = digits.ZERO
-    if int(full_date[1][0]) == 1: digit3 = digits.ONE
-    if int(full_date[1][0]) == 2: digit3 = digits.TWO
-    if int(full_date[1][0]) == 3: digit3 = digits.THREE
-    if int(full_date[1][0]) == 4: digit3 = digits.FOUR
-    if int(full_date[1][0]) == 5: digit3 = digits.FIVE
-    if int(full_date[1][0]) == 6: digit3 = digits.SIX
-    if int(full_date[1][0]) == 7: digit3 = digits.SEVEN
-    if int(full_date[1][0]) == 8: digit3 = digits.EIGHT
-    if int(full_date[1][0]) == 9: digit3 = digits.NINE
-
-def set_digit4():
-    global digit4
-    full_date = get_date()
-    if int(full_date[1][1]) == 0: digit4 = digits.ZERO
-    if int(full_date[1][1]) == 1: digit4 = digits.ONE
-    if int(full_date[1][1]) == 2: digit4 = digits.TWO
-    if int(full_date[1][1]) == 3: digit4 = digits.THREE
-    if int(full_date[1][1]) == 4: digit4 = digits.FOUR
-    if int(full_date[1][1]) == 5: digit4 = digits.FIVE
-    if int(full_date[1][1]) == 6: digit4 = digits.SIX
-    if int(full_date[1][1]) == 7: digit4 = digits.SEVEN
-    if int(full_date[1][1]) == 8: digit4 = digits.EIGHT
-    if int(full_date[1][1]) == 9: digit4 = digits.NINE
+    for digit_date in digit_dates:
+        dateval = digit_date[1]
+        digit = digits.display_digits[dateval]
+        x = digit_date[2]
+        y = digit_date[3]
+        map_digit(x, y, digit)
 
 # TODO ^ this is horrible code, i know
 
@@ -223,13 +168,13 @@ def get_dwarf_color():
 def dwarf_talk():
     date = get_date()
 
-    if int(date[2][1]) not in [1, 2, 3]:
+    if int(date[2][-1]) not in [1, 2, 3]:
         ordinal_indicator = 'th'
     else:
 
-        if int(date[2][1]) == 1:
+        if int(date[2][-1]) == 1:
             ordinal_indicator = 'st'
-        elif int(date[2][1]) == 2:
+        elif int(date[2][-1]) == 2:
             ordinal_indicator = 'nd'
         else:
             ordinal_indicator = 'rd'
