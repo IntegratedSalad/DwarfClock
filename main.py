@@ -168,13 +168,13 @@ def get_dwarf_color():
 def dwarf_talk():
     date = get_date()
 
-    if int(date[2][1]) not in [1, 2, 3]:
+    if int(date[2][-1]) not in [1, 2, 3]:
         ordinal_indicator = 'th'
     else:
 
-        if int(date[2][1]) == 1:
+        if int(date[2][-1]) == 1:
             ordinal_indicator = 'st'
-        elif int(date[2][1]) == 2:
+        elif int(date[2][-1]) == 2:
             ordinal_indicator = 'nd'
         else:
             ordinal_indicator = 'rd'
